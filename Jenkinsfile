@@ -1,0 +1,6 @@
+node {
+
+    println 'Hello, Jenkins!'
+
+}
+
