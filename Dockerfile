@@ -5,7 +5,7 @@ ENV PGVERSION 10
 ENV PGDATA /opt/db/
 ENV NODEVERSION 10
 
-#---------------------- Installs Reis, PostgreSQL, Node.js and Updates the system-------------------------------
+#--------------------- Installs Reis, PostgreSQL, Node.js and Updates the system-------------------------------
 SHELL ["/bin/bash", "-c"]
 RUN set -o pipefail && apt-get update && apt-get -y upgrade &&\
     apt-get install -y git curl jq software-properties-common wget &&\
