@@ -1,0 +1,23 @@
+machine:
+  node:
+    version: 6.9.2
+  pre:
+    - mkdir ~/.yarn-cache
+
+dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
+  post:
+    - yarn global add swagger sequelize-cli
+  cache_directories:
+    - ~/.yarn-cache
+  override:
+    - yarn install --force
+
+test:
+  pre:
+    - cp .env.test.example .env.test
+    - createdb database_test
+    - NODE_ENV=test sequelize db:migrate
+  override:
+    - yarn test

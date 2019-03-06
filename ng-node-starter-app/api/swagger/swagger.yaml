@@ -1,0 +1,108 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Netguru Node.js starter app
+host: localhost:10010
+basePath: /api
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /users:
+    x-swagger-router-controller: users
+    post:
+      description: Registers new user account
+      operationId: userRegister
+      parameters:
+        - name: username
+          in: formData
+          description: Username of this user
+          required: true
+          type: string
+        - name: password
+          in: formData
+          description: Password for this user
+          required: true
+          type: string
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/UserResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/login:
+    x-swagger-router-controller: users
+    post:
+      description: Signs in user
+      operationId: login
+      parameters:
+        - name: username
+          in: formData
+          description: Username of this user
+          required: true
+          type: string
+        - name: password
+          in: formData
+          description: Password for this user
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/TokenResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/me:
+    x-swagger-router-controller: users
+    get:
+      description: Gets account of currently logged-in user
+      operationId: getAccount
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authentication token
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/UserResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+definitions:
+  UserResponse:
+    required:
+      - id
+      - username
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+  TokenResponse:
+    required:
+      - token
+    properties:
+      token:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
